@@ -1,0 +1,6 @@
+@MeuGuia.API_HostAddress = http://localhost:5158
+
+GET {{MeuGuia.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
