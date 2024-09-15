@@ -1,5 +1,10 @@
-﻿using MeuGuia.Application.Notification;
+﻿using MediatR;
+using MeuGuia.Application.Commands.Revenue.Create;
+using MeuGuia.Application.Commands.Revenue.Delete;
+using MeuGuia.Application.Commands.Revenue.Update;
+using MeuGuia.Application.Notification;
 using MeuGuia.Domain.Interface;
+using MeuGuia.Infra.Repository;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,10 +25,15 @@ public static class DependencyInjection
 
     private static void ResolveRepositoryDependencies(IServiceCollection services)
     {
+        services.AddScoped<IRepositoryRevenue, RepositoryRevenue>();
     }
 
     private static void ResolveMediatRDependencies(this IServiceCollection services)
     {
+            services.AddMediatR(typeof(CreateRevenueCommandRequest));
+            services.AddMediatR(typeof(UpdateRevenueCommandRequest));
+            services.AddMediatR(typeof(DeleteRevenueCommandRequest));
+
     }
 
     private static void ResolveDependenciesHelper(IServiceCollection services)

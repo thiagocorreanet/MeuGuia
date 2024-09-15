@@ -34,10 +34,7 @@ public static class ServiceExtension
                     Name = "Meu guia",
                     Url = new Uri("https://www.meuguia.com.br/")
                 },
-                Description = @"
-Seja muito bem-vindo à nossa documentação do Swagger! Estamos felizes em tê-lo aqui. Nesta documentação, você encontrará uma descrição completa e detalhada de todos os endpoints disponíveis em nossa API.
-
-                    "
+                Description = @"Seja muito bem-vindo à nossa documentação do Swagger! Estamos felizes em tê-lo aqui. Nesta documentação, você encontrará uma descrição completa e detalhada de todos os endpoints disponíveis em nossa API. Esse projeto consiste até o momento em organizar de forma pratica nossas finanças pessoais com entrada e saída."
             });
 
             // Inclui comentários XML para documentação

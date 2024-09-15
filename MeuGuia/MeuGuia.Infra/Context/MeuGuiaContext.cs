@@ -13,6 +13,7 @@ public class MeuGuiaContext : IdentityDbContext<IdentityUserCustom>
     public MeuGuiaContext(DbContextOptions options) : base(options) { }
 
     public DbSet<AuditProcess> AuditsProcess => Set<AuditProcess>();
+    public DbSet<Revenue> Revenues => Set<Revenue>();
 
     /// <summary>
     /// Sobrescreve o método de configuração do modelo para aplicar configurações específicas do contexto.

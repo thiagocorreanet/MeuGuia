@@ -19,10 +19,4 @@
     <ProjectReference Include="..\MeuGuia.Infra\MeuGuia.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Helper\" />
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
 </Project>

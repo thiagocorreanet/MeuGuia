@@ -26,7 +26,7 @@ public class MainController : ControllerBase
     /// </summary>
     /// <param name="result">O resultado a ser retornado se a operação for válida.</param>
     /// <returns>Retorna um objeto com a propriedade 'success' e 'data' ou 'errors'.</returns>
-    protected ActionResult CustomResponse(object result = null)
+    protected ActionResult CustomResponse(object? result = null)
     {
         if (ValidOperation())
         {

@@ -22,45 +22,45 @@ public class ConfigrationAudit : IEntityTypeConfiguration<AuditProcess>
 
         builder.Property(c => c.Type)
            .HasColumnName("Type")
-           .HasColumnOrder(4)
+           .HasColumnOrder(2)
            .IsRequired()
            .HasColumnType("VARCHAR(20)")
            .HasComment("Tipo da auditoria");
 
         builder.Property(c => c.Table)
            .HasColumnName("Table")
-           .HasColumnOrder(5)
+           .HasColumnOrder(3)
            .IsRequired()
            .HasColumnType("VARCHAR(100)")
            .HasComment("Tabela na qual vai ser exibida na auditoria");
 
         builder.Property(c => c.OldValues)
            .HasColumnName("OldValues")
-           .HasColumnOrder(6)
+           .HasColumnOrder(4)
            .HasColumnType("VARCHAR(MAX)")
            .HasComment("Valor antigo");
 
         builder.Property(c => c.NewValues)
            .HasColumnName("NewValues")
-           .HasColumnOrder(7)
+           .HasColumnOrder(5)
            .HasColumnType("VARCHAR(MAX)")
            .HasComment("Novo valor");
 
         builder.Property(c => c.AffectedColumns)
            .HasColumnName("AffectedColumns")
-           .HasColumnOrder(8)
+           .HasColumnOrder(6)
            .HasColumnType("VARCHAR(MAX)")
            .HasComment("Colunas que foram afetadas");
 
         builder.Property(c => c.PrimaryKey)
            .HasColumnName("PrimaryKey")
-           .HasColumnOrder(9)
+           .HasColumnOrder(7)
            .HasColumnType("VARCHAR(50)")
            .HasComment("Primary key da tabela");
 
         builder.Property(c => c.CreationDate)
            .HasColumnName("CreationDate")
-           .HasColumnOrder(10)
+           .HasColumnOrder(8)
            .IsRequired()
            .HasColumnType("DATETIME2")
            .HasDefaultValueSql("GETDATE()")
@@ -69,7 +69,7 @@ public class ConfigrationAudit : IEntityTypeConfiguration<AuditProcess>
 
         builder.Property(c => c.ModificationDate)
             .HasColumnName("ModificationDate")
-            .HasColumnOrder(11)
+            .HasColumnOrder(9)
             .IsRequired()
             .HasColumnType("datetime2")
             .HasDefaultValueSql("GETDATE()")
