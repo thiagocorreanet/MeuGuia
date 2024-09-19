@@ -11,7 +11,7 @@ public class CreateBannerCommandHandler : CreateBaseCommand, IRequestHandler<Cre
 
     private readonly IRepositoryRevenue _iRepositoryRevenue;
 
-    public CreateBannerCommandHandler(INotificationError notificationError, IMapper iMapper, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper)
+    public CreateBannerCommandHandler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper, helperIdentity)
     {
         _iRepositoryRevenue = iRepositoryRevenue;
     }

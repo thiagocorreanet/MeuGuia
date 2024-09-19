@@ -1,7 +1,12 @@
 using MeuGuia.Application.Mapping;
 using MeuGuia.CrossCutting;
+using MeuGuia.Domain.JWT;
 using MeuGuia.WebAPI.Extension;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,31 +44,31 @@ builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration));
 
 
 //JWT Authentication configuration
-//var appSettingsSection = builder.Configuration.GetSection("AppSettingsJwt");
-//builder.Services.Configure<JsonWebToken>(appSettingsSection);
+var appSettingsSection = builder.Configuration.GetSection("AppSettingsJwt");
+builder.Services.Configure<JsonWebToken>(appSettingsSection);
 
-//var appSettings = appSettingsSection.Get<JsonWebToken>();
-//var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+var appSettings = appSettingsSection.Get<JsonWebToken>();
+var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
 
-//builder.Services.AddAuthentication(x =>
-//{
-//    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(x =>
-//{
-//    x.RequireHttpsMetadata = false;
-//    x.SaveToken = true;
-//    x.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuerSigningKey = true,
-//        IssuerSigningKey = new SymmetricSecurityKey(key),
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidAudience = appSettings.ValidIn,
-//        ValidIssuer = appSettings.Issuer
-//    };
-//});
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = appSettings.ValidIn,
+        ValidIssuer = appSettings.Issuer
+    };
+});
 
 var app = builder.Build();
 

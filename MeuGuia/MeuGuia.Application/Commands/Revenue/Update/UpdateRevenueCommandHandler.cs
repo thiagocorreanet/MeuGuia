@@ -14,7 +14,7 @@ public class UpdateRevenueCommandHandler : CreateBaseCommand, IRequestHandler<Up
 
     private readonly IRepositoryRevenue _iRepositoryRevenue;
 
-    public UpdateRevenueCommandHandler(INotificationError notificationError, IMapper iMapper, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper)
+    public UpdateRevenueCommandHandler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper, helperIdentity)
     {
         _iRepositoryRevenue = iRepositoryRevenue;
     }

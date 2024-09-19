@@ -11,11 +11,13 @@ public abstract class CreateBaseCommand
 {
     private readonly INotificationError _notificationError;
     private readonly IMapper _iMapper;
+    private readonly HelperIdentity _helperIdentity;
 
-    protected CreateBaseCommand(INotificationError notificationError, IMapper iMapper)
+    protected CreateBaseCommand(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity)
     {
         _notificationError = notificationError;
         _iMapper = iMapper;
+        _helperIdentity = helperIdentity;
     }
 
     #region Notification
@@ -100,6 +102,27 @@ public abstract class CreateBaseCommand
     }
 
 
+
+    #endregion
+
+    #region Users
+
+    /// <summary>
+    /// Método responsável por obter os dados do usuário que esta logado na API.
+    /// </summary>
+    /// <returns>Retorna os dados do usuário e caso não ache vai retornar nulo.</returns>
+    protected async Task<IdentityUserCustom?> GetLoggedInUser()
+    {
+        var user = await _helperIdentity.GetLoggedInUser();
+
+        if (user is null)
+        {
+            Notify("Usuário não autenticado, por favor tente novamente.");
+            return null;
+        }
+
+        return user;
+    }
 
     #endregion
 }
