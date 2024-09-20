@@ -2,18 +2,20 @@
 using MeuGuia.Domain.Entitie;
 using MeuGuia.Domain.Enum;
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace MeuGuia.Infra.Context;
 
-public class MeuGuiaContext : IdentityDbContext<IdentityUserCustom>
+public class MeuGuiaContext : IdentityDbContext<IdentityUserCustom, IdentityRole, string, IdentityUserClaimCustom, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
 {
     public MeuGuiaContext(DbContextOptions options) : base(options) { }
 
     public DbSet<AuditProcess> AuditsProcess => Set<AuditProcess>();
     public DbSet<Revenue> Revenues => Set<Revenue>();
+    public DbSet<Permission> Permissions => Set<Permission>();
 
     /// <summary>
     /// Sobrescreve o método de configuração do modelo para aplicar configurações específicas do contexto.

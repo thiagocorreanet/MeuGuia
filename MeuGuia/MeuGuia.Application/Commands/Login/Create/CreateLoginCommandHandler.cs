@@ -9,7 +9,7 @@ public class CreateLoginCommandHandler : CreateBaseCommand, IRequestHandler<Crea
 {
     private readonly IRepositoryManagementAccount _iRepositoryManagementAccount;
 
-    public CreateLoginCommandHandler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryManagementAccount iRepositoryManagementAccount) : base(notificationError, iMapper, helperIdentity)
+    public CreateLoginCommandHandler(INotificationError notificationError, IMapper iMapper, IRepositoryManagementAccount iRepositoryManagementAccount) : base(notificationError, iMapper)
     {
         _iRepositoryManagementAccount = iRepositoryManagementAccount;
     }

@@ -13,7 +13,7 @@ public class CreateUserCommandHendler : CreateBaseCommand, IRequestHandler<Creat
 {
     private readonly IRepositoryManagementAccount _iRepositoryManagementAccount;
 
-    public CreateUserCommandHendler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryManagementAccount iRepositoryManagementAccount) : base(notificationError, iMapper, helperIdentity)
+    public CreateUserCommandHendler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryManagementAccount iRepositoryManagementAccount) : base(notificationError, iMapper)
     {
         _iRepositoryManagementAccount = iRepositoryManagementAccount;
     }

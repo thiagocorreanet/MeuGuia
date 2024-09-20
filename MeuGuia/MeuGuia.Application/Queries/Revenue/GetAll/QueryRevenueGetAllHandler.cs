@@ -10,7 +10,7 @@ public class QueryRevenueGetAllHandler : CreateBaseCommand, IRequestHandler<Quer
 {
     private readonly IRepositoryRevenue _iRepositoryRevenue;
 
-    public QueryRevenueGetAllHandler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper, helperIdentity)
+    public QueryRevenueGetAllHandler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper)
     {
         _iRepositoryRevenue = iRepositoryRevenue;
     }

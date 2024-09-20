@@ -1,5 +1,7 @@
 using AutoMapper;
+
 using MediatR;
+
 using MeuGuia.Application.Helper;
 using MeuGuia.Domain.Interface;
 using MeuGuia.Domain.Validation;
@@ -11,14 +13,14 @@ public class CreateBannerCommandHandler : CreateBaseCommand, IRequestHandler<Cre
 
     private readonly IRepositoryRevenue _iRepositoryRevenue;
 
-    public CreateBannerCommandHandler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper, helperIdentity)
+    public CreateBannerCommandHandler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper)
     {
         _iRepositoryRevenue = iRepositoryRevenue;
     }
 
     public async Task<bool> Handle(CreateRevenueCommandRequest request, CancellationToken cancellationToken)
     {
-        bool transactionStared = true; 
+        bool transactionStared = true;
         var revenueEntitie = await SimpleMapping<MeuGuia.Domain.Entitie.Revenue>(request);
         if (!await Validate(revenueEntitie)) return false;
 
@@ -28,19 +30,19 @@ public class CreateBannerCommandHandler : CreateBaseCommand, IRequestHandler<Cre
             _iRepositoryRevenue.Create(revenueEntitie);
             var result = await _iRepositoryRevenue.SaveChangesAsync();
 
-              if (!result)
+            if (!result)
             {
                 Notify("Ops! Não foi possível salvar seu registro. Por favor tente novamente.");
                 await _iRepositoryRevenue.RollbackTransactionAsync();
                 return false;
             }
 
-             await _iRepositoryRevenue.CommitTransactionAsync();
+            await _iRepositoryRevenue.CommitTransactionAsync();
         }
         catch (Exception)
         {
-              if (transactionStared) 
-              await _iRepositoryRevenue.RollbackTransactionAsync();
+            if (transactionStared)
+                await _iRepositoryRevenue.RollbackTransactionAsync();
 
             Notify($"Não foi possível salvar o registro");
         }
@@ -48,7 +50,7 @@ public class CreateBannerCommandHandler : CreateBaseCommand, IRequestHandler<Cre
         return true;
     }
 
-      private async Task<bool> Validate(MeuGuia.Domain.Entitie.Revenue revenue)
+    private async Task<bool> Validate(MeuGuia.Domain.Entitie.Revenue revenue)
     {
         if (!RunValidation(new ValidationRevenue(), revenue))
             return false;

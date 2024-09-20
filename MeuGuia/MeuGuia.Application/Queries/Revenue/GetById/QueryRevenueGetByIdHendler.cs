@@ -11,7 +11,7 @@ public class QueryRevenueGetByIdHendler : CreateBaseCommand, IRequestHandler<Que
 {
     private readonly IRepositoryRevenue _iRepositoryRevenue;
 
-    public QueryRevenueGetByIdHendler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper, helperIdentity)
+    public QueryRevenueGetByIdHendler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper)
     {
         _iRepositoryRevenue = iRepositoryRevenue;
     }

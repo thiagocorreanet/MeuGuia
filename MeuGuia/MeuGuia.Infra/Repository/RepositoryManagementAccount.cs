@@ -1,8 +1,12 @@
 ﻿using MeuGuia.Domain.Entitie;
 using MeuGuia.Domain.Interface;
 using MeuGuia.Domain.JWT;
+using MeuGuia.Infra.Context;
+
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,28 +22,20 @@ public class RepositoryManagementAccount : IRepositoryManagementAccount
     readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _iConfiguration;
     private readonly JsonWebToken _jsonWebToken;
+    protected MeuGuiaContext _context;
+    private readonly ILogger<RepositoryManagementAccount> _logger;
 
-    public RepositoryManagementAccount(UserManager<IdentityUserCustom> userManager, SignInManager<IdentityUserCustom> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration iConfiguration, IOptions<JsonWebToken> jsonWebToken)
+    public RepositoryManagementAccount(UserManager<IdentityUserCustom> userManager, SignInManager<IdentityUserCustom> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration iConfiguration, IOptions<JsonWebToken> jsonWebToken, MeuGuiaContext context, ILogger<RepositoryManagementAccount> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _roleManager = roleManager;
         _iConfiguration = iConfiguration;
         _jsonWebToken = jsonWebToken.Value;
+        _context = context;
+        _logger = logger;
     }
 
-    /// <summary>
-    /// Autentica um usuário de forma assíncrona com base no nome de usuário e senha fornecidos.
-    /// </summary>
-    /// <param name="username">O nome de usuário ou e-mail do usuário a ser autenticado.</param>
-    /// <param name="password">A senha do usuário a ser autenticado.</param>
-    /// <returns>
-    /// Uma tarefa que representa a operação assíncrona. O resultado da tarefa contém um valor booleano indicando se a autenticação foi bem-sucedida.
-    /// </returns>
-    /// <remarks>
-    /// Este método primeiro tenta encontrar um usuário pelo e-mail usando o método <see cref="UserManager.FindByEmailAsync"/>.
-    /// Se o usuário for encontrado, ele tenta fazer o login do usuário usando o método <see cref="SignInManager.PasswordSignInAsync"/>.
-    /// </remarks>
     public async Task<LoginUser> AuthenticateAsync(string username, string password)
     {
 
@@ -55,18 +51,6 @@ public class RepositoryManagementAccount : IRepositoryManagementAccount
         return await GenerateJwtToken(username);
     }
 
-    /// <summary>
-    /// Registra um usuário de forma assíncrona com base nos dados fornecidos.
-    /// </summary>
-    /// <param name="user">O objeto <see cref="UserIdentity"/> que contém os dados do usuário a ser registrado.</param>
-    /// <returns>
-    /// Uma tarefa que representa a operação assíncrona. O resultado da tarefa contém um valor booleano indicando se o registro foi bem-sucedido.
-    /// </returns>
-    /// <remarks>
-    /// Este método cria um novo usuário usando o método <see cref="UserManager.CreateAsync"/> com uma senha padrão.
-    /// Se a criação for bem-sucedida, o usuário é automaticamente logado usando o método <see cref="SignInManager.SignInAsync"/>.
-    /// Além disso, uma permissão é atribuída ao usuário com base no seu nome de usuário.
-    /// </remarks>
     public async Task<bool> RegisterUserAsync(IdentityUserCustom user)
     {
         string standardPassword = "Mudar@123456789";
@@ -86,15 +70,6 @@ public class RepositoryManagementAccount : IRepositoryManagementAccount
         return result.Succeeded;
     }
 
-    /// <summary>
-    /// Faz o logout de um usuário de forma assíncrona.
-    /// </summary>
-    /// <returns>
-    /// Uma tarefa que representa a operação assíncrona de logout.
-    /// </returns>
-    /// <remarks>
-    /// Este método utiliza o <see cref="SignInManager.SignOutAsync"/> para realizar o logout do usuário atual.
-    /// </remarks>
     public async Task Logout()
     {
         await _signInManager.SignOutAsync();
@@ -145,6 +120,57 @@ public class RepositoryManagementAccount : IRepositoryManagementAccount
         };
 
         return response;
+    }
+
+    public async Task<IdentityUserClaimCustom?> RegisterUserClimAsync(string email, string claimType, string claimValue)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        IdentityUserClaimCustom? getUserClaim = new IdentityUserClaimCustom();
+
+        if (user is null)
+        {
+            return null;
+        }
+        else
+        {
+            var claim = new Claim(claimType, claimValue);
+            var result = await _userManager.AddClaimAsync(user, claim);
+
+            if (result.Succeeded)
+            {
+                getUserClaim = _context.UserClaims.FirstOrDefault(x => x.UserId == user.Id && x.ClaimType == claim.Type && x.ClaimValue == claim.Value);
+                getUserClaim.ClaimType = claim.Type;
+                getUserClaim.ClaimValue = claimValue;
+            }
+
+            return getUserClaim;
+        }
+
+    }
+
+    public async Task<IdentityUserClaimCustom?> UpdateUserClimAsync(int id, string claimType, string claimValue)
+    {
+        try
+        {
+            var claim = await _context.UserClaims.FirstOrDefaultAsync(x => x.Id == id);
+            if (claim is not null)
+            {
+                claim.ClaimType = claimType;
+                claim.ClaimValue = claimValue;
+
+                await _context.SaveChangesAsync(); 
+                return claim;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Não foi possível atualizar a claim: {ex.Message}");
+            return null;
+        }
     }
 
     private static long ToUnixEpochDate(DateTime date)

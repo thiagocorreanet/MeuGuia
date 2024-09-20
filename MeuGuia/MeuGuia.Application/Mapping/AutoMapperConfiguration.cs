@@ -1,8 +1,14 @@
 ﻿using AutoMapper;
+
+using MeuGuia.Application.Commands.Permission.Create;
+using MeuGuia.Application.Commands.Permission.Delete;
+using MeuGuia.Application.Commands.Permission.Update;
 using MeuGuia.Application.Commands.Revenue.Create;
 using MeuGuia.Application.Commands.Revenue.Delete;
 using MeuGuia.Application.Commands.Revenue.Update;
 using MeuGuia.Application.Commands.User.Create;
+using MeuGuia.Application.Queries.Permission.GetAll;
+using MeuGuia.Application.Queries.Permission.GetById;
 using MeuGuia.Application.Queries.Revenue.GetAll;
 using MeuGuia.Application.Queries.Revenue.GetById;
 using MeuGuia.Domain.Entitie;
@@ -27,6 +33,17 @@ public class AutoMapperConfiguration : Profile
 
         CreateMap<Revenue, QueryRevenueGetAllResponseItems>().ReverseMap();
         CreateMap<Revenue, QueryRevenueGetByIdResponseItem>().ReverseMap();
+
+        #endregion
+
+        #region Permission
+
+        CreateMap<Permission, CreatePermissionCommandRequest>().ReverseMap();
+        CreateMap<Permission, UpdatePermissionCommandRequest>().ReverseMap();
+        CreateMap<Permission, DeletePermissionCommandRequest>().ReverseMap();
+
+        CreateMap<Permission, QueryPermissionGetAllResponseItems>().ReverseMap();
+        CreateMap<Permission, QueryPermissionGetByIdResponseItem>().ReverseMap();
 
         #endregion
     }

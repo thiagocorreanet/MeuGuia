@@ -2,6 +2,9 @@
 
 using MeuGuia.Application.Commands.Login.Create;
 using MeuGuia.Application.Commands.Logout.Create;
+using MeuGuia.Application.Commands.Permission.Create;
+using MeuGuia.Application.Commands.Permission.Delete;
+using MeuGuia.Application.Commands.Permission.Update;
 using MeuGuia.Application.Commands.Revenue.Create;
 using MeuGuia.Application.Commands.Revenue.Delete;
 using MeuGuia.Application.Commands.Revenue.Update;
@@ -15,6 +18,8 @@ using MeuGuia.Infra.Repository;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+
+using Serilog;
 
 namespace MeuGuia.CrossCutting;
 
@@ -35,6 +40,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IRepositoryRevenue, RepositoryRevenue>();
         services.AddScoped<IRepositoryManagementAccount, RepositoryManagementAccount>();
+        services.AddScoped<IRepositoryPermission, RepositoryPermission>();
     }
 
     private static void ResolveMediatRDependencies(this IServiceCollection services)
@@ -56,6 +62,14 @@ public static class DependencyInjection
 
         #endregion
 
+        #region Permission
+
+        services.AddMediatR(typeof(CreatePermissionCommandRequest));
+        services.AddMediatR(typeof(UpdatePermissionCommandRequest));
+        services.AddMediatR(typeof(DeletePermissionCommandRequest));
+
+        #endregion
+
     }
 
     private static void ResolveDependenciesHelper(IServiceCollection services)
@@ -66,6 +80,11 @@ public static class DependencyInjection
     private static void ResolveDependenciesNotification(IServiceCollection services)
     {
         services.AddScoped<INotificationError, NotificationError>();
+    }
+
+    private static void ResolveDependenciesSerilog(IServiceCollection services)
+    {
+        services.AddSingleton(Log.Logger);
     }
 
     private static void ResolveDependenciesIdentity(IServiceCollection services)

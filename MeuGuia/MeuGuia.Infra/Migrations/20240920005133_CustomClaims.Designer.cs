@@ -4,6 +4,7 @@ using MeuGuia.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeuGuia.Infra.Migrations
 {
     [DbContext(typeof(MeuGuiaContext))]
-    partial class MeuGuiaContextModelSnapshot : ModelSnapshot
+    [Migration("20240920005133_CustomClaims")]
+    partial class CustomClaims
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,6 +114,9 @@ namespace MeuGuia.Infra.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("Token")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -185,77 +191,6 @@ namespace MeuGuia.Infra.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("MeuGuia.Domain.Entitie.Permission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("PermissionId")
-                        .HasColumnOrder(1)
-                        .HasComment("Chave primária da permissão.");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AspNetUserClaimId")
-                        .HasColumnType("INT")
-                        .HasColumnName("AspNetUserClaimId")
-                        .HasColumnOrder(3)
-                        .HasComment("Chave primária da tabela AspNetUserClaims");
-
-                    b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME2")
-                        .HasColumnName("CreationDate")
-                        .HasColumnOrder(7)
-                        .HasDefaultValueSql("GETDATE()")
-                        .HasComment("Data de criação do registro");
-
-                    b.Property<DateTime>("ModificationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("ModificationDate")
-                        .HasColumnOrder(8)
-                        .HasDefaultValueSql("GETDATE()")
-                        .HasComment("Data da última atualização do registro");
-
-                    b.Property<string>("Page")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(50)")
-                        .HasColumnName("Page")
-                        .HasColumnOrder(5)
-                        .HasComment("Nome da página que o usuário terá acesso.");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(50)")
-                        .HasColumnName("Role")
-                        .HasColumnOrder(6)
-                        .HasComment("Nome da permissão do usuário.");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(36)")
-                        .HasColumnName("Token")
-                        .HasColumnOrder(2)
-                        .HasComment("Token da tabela");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(36)")
-                        .HasColumnName("UserId")
-                        .HasColumnOrder(4)
-                        .HasComment("Chave do usuário.");
-
-                    b.HasKey("Id")
-                        .HasName("PK_PERMISSIONS");
-
-                    b.HasIndex("Id")
-                        .IsUnique()
-                        .HasDatabaseName("IX_PERMISSION_ID");
-
-                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("MeuGuia.Domain.Entitie.Revenue", b =>

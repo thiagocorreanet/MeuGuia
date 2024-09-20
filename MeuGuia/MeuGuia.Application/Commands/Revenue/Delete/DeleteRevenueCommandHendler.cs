@@ -10,7 +10,7 @@ public class DeleteRevenueCommandHendler : CreateBaseCommand, IRequestHandler<De
 {
     private readonly IRepositoryRevenue _iRepositoryRevenue;
 
-    public DeleteRevenueCommandHendler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper, helperIdentity)
+    public DeleteRevenueCommandHendler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryRevenue iRepositoryRevenue) : base(notificationError, iMapper)
     {
         _iRepositoryRevenue = iRepositoryRevenue;
     }

@@ -6,6 +6,8 @@ using MeuGuia.WebAPI.Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+using Serilog;
+
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -15,6 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwagger();
 builder.Services.AddContext(builder.Configuration);
+builder.Host.UseSerilog();
+builder.Services.AddSerilog(builder.Configuration);
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -61,6 +65,7 @@ builder.Services.AddAuthentication(x =>
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
     {
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = true,
@@ -71,6 +76,11 @@ builder.Services.AddAuthentication(x =>
 });
 
 var app = builder.Build();
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -82,8 +92,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("Development");
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+
 
 app.MapControllers();
 

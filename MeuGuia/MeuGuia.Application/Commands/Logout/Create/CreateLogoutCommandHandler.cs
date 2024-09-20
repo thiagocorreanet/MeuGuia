@@ -12,7 +12,7 @@ public class CreateLogoutCommandHandler : CreateBaseCommand, IRequestHandler<Cre
 
     private readonly IRepositoryManagementAccount _iRepositoryManagementAccount;
 
-    public CreateLogoutCommandHandler(INotificationError notificationError, IMapper iMapper, HelperIdentity helperIdentity, IRepositoryManagementAccount iRepositoryManagementAccount) : base(notificationError, iMapper, helperIdentity)
+    public CreateLogoutCommandHandler(INotificationError notificationError, IMapper iMapper, IRepositoryManagementAccount iRepositoryManagementAccount) : base(notificationError, iMapper)
     {
         _iRepositoryManagementAccount = iRepositoryManagementAccount;
     }

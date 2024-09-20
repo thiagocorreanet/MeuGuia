@@ -3,6 +3,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
+using Serilog;
+
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 using System.Reflection;
@@ -19,6 +21,29 @@ public static class ServiceExtension
 
         return services;
     }
+
+
+    public static void AddSerilog(this IServiceCollection services, IConfiguration configuration)
+    {
+        Serilog.Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .MinimumLevel.Warning()
+            .Enrich.WithEnvironmentName()
+            .Enrich.WithMachineName()
+            .Enrich.WithThreadId()
+            .Enrich.WithProcessId()
+            .WriteTo.Console()
+            .WriteTo.MSSqlServer(
+                connectionString: configuration.GetConnectionString("DefaultConnection"),
+                sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+                {
+                    TableName = "Serilogs",
+                    AutoCreateSqlTable = true
+                })
+            .CreateLogger();
+
+    }
+
 
     public static void AddSwagger(this IServiceCollection services)
     {
