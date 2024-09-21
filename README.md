@@ -18,7 +18,12 @@ Nessa área, teremos duas informações muito importantes para armazenar em noss
 # 🗂️ Estrutura do projeto
 
 👉 **WebAPI:** Projeto de API construida utilizando .NET8 com uma documentaão rica do swagger.
-👉 **Application:**
+👉 **Application:** Projeto que consiste em absorver toda a lógica do sistema.
+      - **Herlper:** Pasta para armazenar métodos uteis para o desenvolvimento.
+      - **CQRS:** Neste projeto utilizaremos o padrão CQRS para separar em nosso sistema cada responsabilidade.
+      - **Mapeamento:** Iremos utilizar AutoMapper para abstrair nossos mapeamento entre classes.
+      - **Notification:** Estrutura de notificação da api para nossos usuários.
+      
 
 
 
