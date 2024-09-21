@@ -72,4 +72,25 @@ Nessa área, teremos duas informações muito importantes para armazenar em noss
 
 - **Autenticação e autorização:** Identity com JWT
 
+# 🚀 Como Rodar o Projeto
+
+- Clone o repositório
+
+  `https://github.com/thiagocorreanet/MeuGuia.git`
+
+- Configure sua string de conexão
+
+  ` "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=MeuGuia;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+  },`
+
+- Execute o comando update-database no Console do Gerenciador de Pacotes para criar as tabelas no banco de dados
+
+# Funcionalidades Implementadas
+
+Quer acopanhar nosso board? https://github.com/users/thiagocorreanet/projects/28
+
+✅ Autenticação e autorização por identity e JWT
+✅ Revenue => Receitas
+
 
