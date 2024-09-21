@@ -54,6 +54,22 @@ Nessa área, teremos duas informações muito importantes para armazenar em noss
 
 - **Validation:** Estrutura para validação dos nossos objetos a nível de entidade utilizando o Fluent Validation.
       
+# 🛠️ Tecnologias Utilizadas
 
+- **Linguagem:** CSharp
+
+- **Framework:** .NET 8
+
+- **bANCO DE DADOS:** SQLServer
+
+- **ORM:** EF Core
+
+- **Projeto de teste** XUnit
+
+- **Documentação:** Swagger
+
+- **Arquitetura:** Clean Architecture
+
+- **Autenticação e autorização:** Identity com JWT
 
 
