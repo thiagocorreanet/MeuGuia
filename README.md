@@ -20,29 +20,39 @@ Nessa área, teremos duas informações muito importantes para armazenar em noss
 👉 **WebAPI:** Projeto de API construida utilizando .NET8 com uma documentaão rica do swagger.
 
 👉 **Application:** Projeto que consiste em absorver toda a lógica do sistema.
-      - **Herlper:** Pasta para armazenar métodos uteis para o desenvolvimento.
+
+- **Herlper:** Pasta para armazenar métodos uteis para o desenvolvimento.
       
-      - **CQRS:** Neste projeto utilizaremos o padrão CQRS para separar em nosso sistema cada responsabilidade.
+- **CQRS:** Neste projeto utilizaremos o padrão CQRS para separar em nosso sistema cada responsabilidade.
       
-      - **Mapeamento:** Iremos utilizar AutoMapper para abstrair nossos mapeamento entre classes.
+- **Mapeamento:** Iremos utilizar AutoMapper para abstrair nossos mapeamento entre classes.
       
-      - **Notification:** Estrutura de notificação da api para nossos usuários.
+- **Notification:** Estrutura de notificação da api para nossos usuários.
 
 👉 **Cross Cutting:** Projeto para armazenar todas DI da nossa palicação.
 
 👉 **Infra:** Projeto representado pela nossa persistência a dados, neste projeto estamos utilizando o EF Core.
-      - **Configuration:** Estrutura da nossa configuração da base de dados.
-      - **Context:** Nosso contexto com auditoria implementada.
-      - Repository: Métodos para manipulação com nossa base de dados.
+- **Configuration:** Estrutura da nossa configuração da base de dados.
+
+- **Context:** Nosso contexto com auditoria implementada.
+
+- Repository: Métodos para manipulação com nossa base de dados.
 
 👉 **Domain:** Nossa camada mais importante o coração da aplicação
-      - **Audit:** Classe responsável pelo fluxo de auditoria das operações realizada.
-      - **Entitie:** Estrutura das nossa entidades.
-      - **Enums:** Estrutura de enums.
-      - **Interfaces:** Nossos contrato de interfaces para os repositórios.
-      - **JWT:** Classe para manipulação do JWT.
-      - **Notification:** Estrutura de notificações da nossa API.
-      - **Validation:** Estrutura para validação dos nossos objetos a nível de entidade utilizando o Fluent Validation.
+
+- **Audit:** Classe responsável pelo fluxo de auditoria das operações realizada.
+
+- **Entitie:** Estrutura das nossa entidades.
+
+- **Enums:** Estrutura de enums.
+
+- **Interfaces:** Nossos contrato de interfaces para os repositórios.
+
+- **JWT:** Classe para manipulação do JWT.
+
+- **Notification:** Estrutura de notificações da nossa API.
+
+- **Validation:** Estrutura para validação dos nossos objetos a nível de entidade utilizando o Fluent Validation.
       
 
 
