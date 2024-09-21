@@ -91,6 +91,7 @@ Nessa área, teremos duas informações muito importantes para armazenar em noss
 Quer acopanhar nosso board? https://github.com/users/thiagocorreanet/projects/28
 
 ✅ Autenticação e autorização por identity e JWT
+
 ✅ Revenue => Receitas
 
 
