@@ -35,6 +35,11 @@ Nessa área, teremos duas informações muito importantes para armazenar em noss
 👉 **Domain:** Nossa camada mais importante o coração da aplicação
       - **Audit:** Classe responsável pelo fluxo de auditoria das operações realizada.
       - **Entitie:** Estrutura das nossa entidades.
+      - **Enums:** Estrutura de enums.
+      - **Interfaces:** Nossos contrato de interfaces para os repositórios.
+      - **JWT:** Classe para manipulação do JWT.
+      - **Notification:** Estrutura de notificações da nossa API.
+      - **Validation:** Estrutura para validação dos nossos objetos a nível de entidade utilizando o Fluent Validation.
       
 
 
