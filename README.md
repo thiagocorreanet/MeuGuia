@@ -60,7 +60,7 @@ Nessa área, teremos duas informações muito importantes para armazenar em noss
 
 - **Framework:** .NET 8
 
-- **bANCO DE DADOS:** SQLServer
+- **Banco de dados:** SQLServer
 
 - **ORM:** EF Core
 
